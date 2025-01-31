@@ -12,13 +12,18 @@ import {
   BarChart,
   ChevronRight,
   ArrowRight,
+  ShoppingBag,
+  Link as LinkIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [enableRetargeting, setEnableRetargeting] = useState(true);
   const { toast } = useToast();
 
   const handlePlatformToggle = (platform: string) => {
@@ -43,38 +48,104 @@ const Index = () => {
 
   const steps = [
     {
-      title: "Choose Your Platforms",
-      subtitle: "Select the platforms where you want to run your ad campaigns",
+      title: "Choose Your Platforms & Products",
+      subtitle: "Select the platforms and configure product targeting",
       content: (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <OnboardingCard
-            icon={<Facebook className="w-6 h-6" />}
-            title="Facebook Ads"
-            description="Reach billions of users with targeted Facebook advertisements"
-            selected={selectedPlatforms.includes("facebook")}
-            onClick={() => handlePlatformToggle("facebook")}
-          />
-          <OnboardingCard
-            icon={<Instagram className="w-6 h-6" />}
-            title="Instagram Ads"
-            description="Connect with users through visual Instagram campaigns"
-            selected={selectedPlatforms.includes("instagram")}
-            onClick={() => handlePlatformToggle("instagram")}
-          />
-          <OnboardingCard
-            icon={<Youtube className="w-6 h-6" />}
-            title="YouTube Ads"
-            description="Engage audiences with video advertisements"
-            selected={selectedPlatforms.includes("youtube")}
-            onClick={() => handlePlatformToggle("youtube")}
-          />
-          <OnboardingCard
-            icon={<Target className="w-6 h-6" />}
-            title="Google Ads"
-            description="Reach customers across Google's advertising network"
-            selected={selectedPlatforms.includes("google")}
-            onClick={() => handlePlatformToggle("google")}
-          />
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <OnboardingCard
+              icon={<Facebook className="w-6 h-6" />}
+              title="Facebook Ads"
+              description="Reach billions of users with targeted Facebook advertisements"
+              selected={selectedPlatforms.includes("facebook")}
+              onClick={() => handlePlatformToggle("facebook")}
+            />
+            <OnboardingCard
+              icon={<Instagram className="w-6 h-6" />}
+              title="Instagram Ads"
+              description="Connect with users through visual Instagram campaigns"
+              selected={selectedPlatforms.includes("instagram")}
+              onClick={() => handlePlatformToggle("instagram")}
+            />
+            <OnboardingCard
+              icon={<Youtube className="w-6 h-6" />}
+              title="YouTube Ads"
+              description="Engage audiences with video advertisements"
+              selected={selectedPlatforms.includes("youtube")}
+              onClick={() => handlePlatformToggle("youtube")}
+            />
+            <OnboardingCard
+              icon={<Target className="w-6 h-6" />}
+              title="Google Ads"
+              description="Reach customers across Google's advertising network"
+              selected={selectedPlatforms.includes("google")}
+              onClick={() => handlePlatformToggle("google")}
+            />
+          </div>
+
+          {selectedPlatforms.includes("facebook") && (
+            <div className="mt-8 space-y-6">
+              <div className="border rounded-lg p-6 space-y-4">
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <ShoppingBag className="w-5 h-5" />
+                  Product Catalog Selection
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Choose products from your Facebook Commerce Manager to include in your ads
+                </p>
+                <div className="space-y-2">
+                  {["Product 1", "Product 2", "Product 3"].map((product) => (
+                    <div key={product} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={product}
+                        checked={selectedProducts.includes(product)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setSelectedProducts((prev) => [...prev, product]);
+                          } else {
+                            setSelectedProducts((prev) =>
+                              prev.filter((p) => p !== product)
+                            );
+                          }
+                        }}
+                      />
+                      <label
+                        htmlFor={product}
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        {product}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border rounded-lg p-6 space-y-4">
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <LinkIcon className="w-5 h-5" />
+                  URL-Based Retargeting
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Automatically create retargeting audiences based on URL visits
+                </p>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="enable-retargeting"
+                    checked={enableRetargeting}
+                    onCheckedChange={(checked) => {
+                      setEnableRetargeting(checked as boolean);
+                    }}
+                  />
+                  <label
+                    htmlFor="enable-retargeting"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Enable automatic retargeting for selected products
+                  </label>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       ),
     },
