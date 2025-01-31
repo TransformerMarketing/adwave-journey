@@ -36,27 +36,6 @@ const Dashboard = () => {
       image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
       url: "https://example.com/coffee",
     },
-    {
-      id: "4",
-      name: "Yoga Mat Premium",
-      price: 79.99,
-      image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
-      url: "https://example.com/yoga",
-    },
-    {
-      id: "5",
-      name: "Mechanical Keyboard",
-      price: 129.99,
-      image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef",
-      url: "https://example.com/keyboard",
-    },
-    {
-      id: "6",
-      name: "Leather Backpack",
-      price: 89.99,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62",
-      url: "https://example.com/backpack",
-    },
   ]);
 
   return (

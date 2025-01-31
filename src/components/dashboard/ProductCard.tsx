@@ -92,6 +92,8 @@ Click now to claim your discount! 👉`;
                   <SelectItem value="10">10% Discount</SelectItem>
                   <SelectItem value="15">15% Discount</SelectItem>
                   <SelectItem value="20">20% Discount</SelectItem>
+                  <SelectItem value="25">25% Discount</SelectItem>
+                  <SelectItem value="30">30% Discount</SelectItem>
                 </SelectContent>
               </Select>
             </div>
